@@ -26,8 +26,9 @@ ylabel('u')
 text(6,9,['t = ',num2str(t,'%1.2f')],'FontSize',14)
 drawnow
 
-gammas = [[0.5]]
-q = 2
+gammas = [[0.5]];
+q = 2; % PEDIR POR INPUT
+s = q/2; % integrador simetrico
 
 tmax = 1.5;
 nplt = floor((tmax/100)/delta_t);
@@ -39,18 +40,11 @@ U = fft(u);% transformada rapida de fourier
 for n = 1:nmax-40000
     t = n*delta_t;
     
-    % lineal
-    U_plus = U.*exp(1i*k.^3*delta_t); % phi_1
-    % no lineal
-    U_plus = U_plus  - (3i*k*delta_t).*fft((real(ifft(U_plus))).^2); % phi_0
-    
-    % no lineal
-    U_minus = U  - (3i*k*delta_t).*fft((real(ifft(U))).^2); % phi_0
-    % lineal
-    U_minus = U_minus.*exp(1i*k.^3*delta_t); % phi_1
+    Phi_plus = get_phi(U, k, delta_t, s, true, 1);
+    Phi_minus = get_phi(U, k, delta_t, s, false, 1);
     
     % integrador simetrico
-    U = gammas(1)(1) * (U_plus + U_minus);
+    U = gammas(s)(1) * (Phi_plus + Phi_minus);
     
     if mod(n,nplt) == 0
         u = real(ifft(U));

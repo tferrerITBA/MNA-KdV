@@ -27,7 +27,8 @@ text(6,9,['t = ',num2str(t,'%1.2f')],'FontSize',14)
 drawnow
 
 gammas = {[0.5]; [-1/16, 9/16]};
-q = 4;
+q = 4; % PEDIR POR INPUT
+s = q/2;
 
 tmax = 1.5;
 nplt = floor((tmax/100)/delta_t);
@@ -39,39 +40,15 @@ U = fft(u);% transformada rapida de fourier
 for n = 1:nmax-40000
     t = n*delta_t;
     
-    % lineal
-    U_plus = U.*exp(1i*k.^3*delta_t); % phi_1
-    % no lineal
-    U_plus = U_plus  - (3i*k*delta_t).*fft((real(ifft(U_plus))).^2); % phi_0
+    U_aux = zeros(1, N);
+    for m = 1:s
+      Phi_plus = get_phi(U, k, delta_t, m, true, m);
+      Phi_minus = get_phi(U, k, delta_t, m, false, m);
     
-    % no lineal
-    U_minus = U  - (3i*k*delta_t).*fft((real(ifft(U))).^2); % phi_0
-    % lineal
-    U_minus = U_minus.*exp(1i*k.^3*delta_t); % phi_1
-    
-    %%%%%%%%%%%%%%
-    % lineal
-    U_plus2 = U.*exp(1i*k.^3*delta_t/2); % phi_1
-    % no lineal
-    U_plus2 = U_plus2  - (3i*k*delta_t/2).*fft((real(ifft(U_plus2))).^2); % phi_0
-    % lineal
-    U_plus2 = U_plus2.*exp(1i*k.^3*delta_t/2); % phi_1
-    % no lineal
-    U_plus2 = U_plus2  - (3i*k*delta_t/2).*fft((real(ifft(U_plus2))).^2); % phi_0
-    
-    % no lineal
-    U_minus2 = U  - (3i*k*delta_t/2).*fft((real(ifft(U))).^2); % phi_0
-    % lineal
-    U_minus2 = U_minus2.*exp(1i*k.^3*delta_t/2); % phi_1
-    % no lineal
-    U_minus2 = U_minus2  - (3i*k*delta_t/2).*fft((real(ifft(U_minus2))).^2); % phi_0
-    % lineal
-    U_minus2 = U_minus2.*exp(1i*k.^3*delta_t/2); % phi_1
-    %%%%%%%%%%%%%%
-    
-    % integrador simetrico
-    U = gammas{2}(1) * (U_plus + U_minus);
-    U = U + gammas{2}(2) * (U_plus2 + U_minus2);
+      % integrador simetrico
+      U_aux = U_aux + gammas{s}(m) * (Phi_plus + Phi_minus);
+    endfor
+    U = U_aux;
     
     if mod(n,nplt) == 0
         u = real(ifft(U));
