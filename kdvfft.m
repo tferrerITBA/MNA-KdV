@@ -44,7 +44,8 @@ for n = 1:nmax-40000
     Phi_minus = get_phi(U, k, delta_t, s, false, 1);
     
     % integrador simetrico
-    U = gammas(s)(1) * (Phi_plus + Phi_minus);
+    gamma_aux = gammas(s);
+    U = gamma_aux(1) * (Phi_plus + Phi_minus);
     
     if mod(n,nplt) == 0
         u = real(ifft(U));
