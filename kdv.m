@@ -1,4 +1,3 @@
-%lie trotter
 %Kdv Dos_solitones
 
 clear all
@@ -6,7 +5,7 @@ clc
 
 q = 0;
 while q <= 0 || mod(q,2) > 0
-    prompt = 'Please enter the order (even number >0): ';
+    prompt = 'Please enter the order (even number > 0): ';
     q = input(prompt);
 end
 s = q/2;
@@ -14,7 +13,7 @@ s = q/2;
 integrators = {@get_phi_lie_trotter, @get_phi_strang};
 integrator_num = 0;
 while integrator_num <= 0 || integrator_num > 2
-    prompt = 'Please enter the integrator number (1: Lie-Trotter; 2: Strang): ';
+    prompt = 'Please select an integrator (1: Lie-Trotter; 2: Strang): ';
     integrator_num = input(prompt);
 end
 integrator = integrators{integrator_num};
@@ -42,14 +41,14 @@ ylabel('u')
 text(6,9,['t = ',num2str(t,'%1.2f')],'FontSize',14)
 drawnow
 
-gammas = {[0.5]; [-1/16, 9/16]};
+gammas = {[0.5]; [-1/16, 9/16]; [1/144, -8/63, 625/1008]; [-1/2304, 32/675, -729/3200, 117649/172800]};
 
 tmax = 1.5;
 nplt = floor((tmax/100)/delta_t);
 nmax = round(tmax/delta_t);
 udata = u.';
 tdata = 0;
-U = fft(u);% transformada rapida de fourier
+U = fft(u);
 
 for n = 1:nmax-40000
     t = n*delta_t;

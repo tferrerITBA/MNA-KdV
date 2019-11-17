@@ -1,3 +1,4 @@
+%get_phi_strang Strang integrator implementation
 function Y = get_phi_strang(U, k, delta_t, m, is_plus, counter)
   h = delta_t / m;
   if is_plus

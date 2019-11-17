@@ -1,3 +1,4 @@
+%get_phi_lie_trotter Lie-Trotter integrator implementation
 function Y = get_phi_lie_trotter(U, k, delta_t, m, is_plus, counter)
   h = delta_t / m;
   if is_plus
