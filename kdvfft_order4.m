@@ -45,13 +45,14 @@ for n = 1:nmax-40000
     t = n*delta_t;
     
     U_aux = zeros(1, N);
+    gammas_aux = gammas{s};
     for m = 1:s
       Phi_plus = get_phi(U, k, delta_t, m, true, m);
       Phi_minus = get_phi(U, k, delta_t, m, false, m);
     
       % integrador simetrico
-      U_aux = U_aux + gammas{s}(m) * (Phi_plus + Phi_minus);
-    endfor
+      U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
+    end
     U = U_aux;
     
     if mod(n,nplt) == 0
