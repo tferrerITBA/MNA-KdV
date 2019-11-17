@@ -46,8 +46,8 @@ U = fft(u);% transformada rapida de fourier
 for n = 1:nmax-40000
     t = n*delta_t;
     
-    Phi_plus = get_phi(U, k, delta_t, s, true, 1);
-    Phi_minus = get_phi(U, k, delta_t, s, false, 1);
+    Phi_plus = get_phi_lie_trotter(U, k, delta_t, s, true, 1);
+    Phi_minus = get_phi_lie_trotter(U, k, delta_t, s, false, 1);
     
     % integrador simetrico
     gamma_aux = gammas(s);

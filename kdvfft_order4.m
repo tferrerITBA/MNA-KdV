@@ -20,13 +20,13 @@ delta_x = x(2) - x(1);% paso espacial
 delta_k = 2*pi/(N*delta_x);
 
 k = [0:delta_k:(N/2-1)*delta_k,0,-(N/2-1)*delta_k:delta_k:-delta_k];% armonicos
-c_1=13; % velocidad 1
-c_2 =3; % velocidad 2
+c_1 = 13; % velocidad 1
+c_2 = 3; % velocidad 2
 
 u = 1/2*c_1*(sech(sqrt(c_1)*(x+8)/2)).^2 + 1/2*c_2*(sech(sqrt(c_2)*(x+1)/2)).^2; % solucion inicial
 
 delta_t = 0.4/N^2; % paso temporal
-t=0;
+t = 0;
 plot(x,u,'LineWidth',2)
 axis([-10 10 0 10])
 xlabel('x')
@@ -49,8 +49,8 @@ for n = 1:nmax-40000
     U_aux = zeros(1, N);
     gammas_aux = gammas{s};
     for m = 1:s
-      Phi_plus = get_phi(U, k, delta_t, m, true, m);
-      Phi_minus = get_phi(U, k, delta_t, m, false, m);
+      Phi_plus = get_phi_lie_trotter(U, k, delta_t, m, true, m);
+      Phi_minus = get_phi_lie_trotter(U, k, delta_t, m, false, m);
     
       % integrador simetrico
       U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);

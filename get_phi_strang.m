@@ -1,12 +1,9 @@
 function Y = get_phi_strang(U, k, delta_t, m, is_plus, counter)
+  h = delta_t / m;
   if is_plus
-    Y = U - (3i * k * ((delta_t/2)/m)) .* fft((real(ifft(U))).^2); % phi_0 -- no lineal
-    Y = Y .* exp(1i * k.^3 * (delta_t/m)); % phi_1 -- lineal
-    Y = Y - (3i * k * ((delta_t/2)/m)) .* fft((real(ifft(Y))).^2); % phi_0 de nuevo -- no lineal
+    Y = non_linear(linear(non_linear(U, k, h/2), k, h), k, h/2);
   else
-    Y = U .* exp(1i * k.^3 * ((delta_t/2)/m)); % phi_1 -- lineal
-    Y = Y - (3i *k * (delta_t/m)) .* fft((real(ifft(Y))).^2); % phi_0 -- no lineal
-    Y = Y .* exp(1i * k.^3 * ((delta_t/2)/m)); % phi_1 de nuevo -- lineal
+    Y = linear(non_linear(linear(U, k, h/2), k, h), k, h/2);
   end
 
   if counter ~= 1
