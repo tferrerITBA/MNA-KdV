@@ -11,6 +11,14 @@ while q <= 0 || mod(q,2) > 0
 end
 s = q/2;
 
+integrators = {@get_phi_lie_trotter, @get_phi_strang};
+integrator_num = 0;
+while integrator_num <= 0 || integrator_num > 2
+    prompt = 'Please enter the integrator number (1: Lie-Trotter; 2: Strang): ';
+    integrator_num = input(prompt);
+end
+integrator = integrators{integrator_num};
+
 set(gca,'FontSize',8)
 set(gca,'LineWidth',2)
 
@@ -49,8 +57,8 @@ for n = 1:nmax-40000
     U_aux = zeros(1, N);
     gammas_aux = gammas{s};
     for m = 1:s
-      Phi_plus = get_phi_lie_trotter(U, k, delta_t, m, true, m);
-      Phi_minus = get_phi_lie_trotter(U, k, delta_t, m, false, m);
+      Phi_plus = integrator(U, k, delta_t, m, true, m);
+      Phi_minus = integrator(U, k, delta_t, m, false, m);
     
       % integrador simetrico
       U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
