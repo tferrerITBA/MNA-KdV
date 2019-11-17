@@ -55,14 +55,26 @@ for n = 1:nmax-40000
     
     U_aux = zeros(1, N);
     gammas_aux = gammas{s};
+
+    answ = [];
+
+    spmd(q)
+        m = ceil(labindex / 2);
+        is_linear = (mod(labindex,2) == 0);
+        answ = integrator(U, k, delta_t, m, is_linear, m);
+    end
+
     for m = 1:s
-      Phi_plus = integrator(U, k, delta_t, m, true, m);
-      Phi_minus = integrator(U, k, delta_t, m, false, m);
-    
-      % integrador simetrico
-      U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
+        % integrador simetrico
+        index = 2 * m;
+        Phi_plus = answ{index-1};
+        Phi_minus = answ{index};
+        U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
     end
     U = U_aux;
+    if n == 1 || n == nplt
+        U
+    end
     
     if mod(n,nplt) == 0
         u = real(ifft(U));
