@@ -27,7 +27,11 @@ text(6,9,['t = ',num2str(t,'%1.2f')],'FontSize',14)
 drawnow
 
 gammas = {[0.5]; [-1/16, 9/16]};
-q = 4; % PEDIR POR INPUT
+q = 0;
+while q <= 0 || mod(q,2) > 0
+    prompt = 'Please enter the order (even number >0): ';
+    q = input(prompt);
+end
 s = q/2;
 
 tmax = 1.5;
