@@ -50,7 +50,9 @@ udata = u.';
 tdata = 0;
 U = fft(u);
 
-for n = 1:nmax-40000
+profile on -nohistory
+
+for n = 1:2500
     t = n*delta_t;
     
     U_aux = zeros(1, N);
@@ -72,8 +74,8 @@ for n = 1:nmax-40000
         U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
     end
     U = U_aux;
-    if n == 1 || n == nplt
-        U
+    if n == 1 || mod(n,100) == 0
+        n
     end
     
     if mod(n,nplt) == 0
@@ -89,6 +91,8 @@ for n = 1:nmax-40000
         end
     end
 end
+
+p = profile('info')
 
 figure
 
