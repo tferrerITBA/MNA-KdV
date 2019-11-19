@@ -1,5 +1,5 @@
 % Insertar los mismos parametros
-delta_t1 = 1e-05;
+delta_t1 = 1e-06;
 delta_t2 = 2 * delta_t1;
 U1 = kdv(delta_t1);
 U2 = kdv(delta_t2);

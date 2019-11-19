@@ -6,5 +6,5 @@ function y = fast_ft(x,N)
     b=exp(-(1i*2*k*m*pi)/N);
     s=sum(x.*b);
     y=[y s];
-  endfor
-endfunction
+  end
+end
