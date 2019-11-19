@@ -50,6 +50,7 @@ udata = u.';
 tdata = 0;
 U = fft(u);
 
+delete(gcp('nocreate'));
 parpool('local', q);
 
 for n = 1:nmax-40000
@@ -98,4 +99,4 @@ waterfall(x,tdata(1:4:end),udata(:,1:4:end)')
 xlabel x, ylabel t, axis([-10 10 0 tmax 0 10]), grid off
 zlabel u
 
-delete(gcp);
+delete(gcp('nocreate'));
