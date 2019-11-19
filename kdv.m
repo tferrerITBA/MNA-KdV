@@ -50,7 +50,7 @@ udata = u.';
 tdata = 0;
 U = fft(u);
 
-profile on -nohistory
+profile on -history
 
 for n = 1:2500
     t = n*delta_t;
@@ -74,7 +74,7 @@ for n = 1:2500
         U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
     end
     U = U_aux;
-    if n == 1 || mod(n,100) == 0
+    if n == 1 || mod(n,100) == 0 || mod(n,nplt) == 0
         n
     end
     
