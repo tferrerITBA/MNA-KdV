@@ -75,9 +75,6 @@ for n = 1:nmax-40000
         U_aux = U_aux + gammas_aux(m) * (Phi_plus + Phi_minus);
     end
     U = U_aux;
-    if n == 1 || n == nplt
-        U
-    end
     
     if mod(n,nplt) == 0
         u = real(ifft(U));
