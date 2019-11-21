@@ -48,7 +48,7 @@ nplt = floor((tmax/100)/delta_t);
 nmax = round(tmax/delta_t);
 udata = u.';
 tdata = 0;
-U = fft(u);
+U = fast_ft(u);
 
 for n = 1:nmax-40000
     t = n*delta_t;
@@ -65,7 +65,7 @@ for n = 1:nmax-40000
     U = U_aux;
     
     if mod(n,nplt) == 0
-        u = real(ifft(U));
+        u = real(inv_fft(U));
         udata = [udata u.']; tdata = [tdata t];
         if mod(n,4*nplt) == 0
             plot(x,u,'LineWidth',2)

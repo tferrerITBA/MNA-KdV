@@ -3,5 +3,4 @@ KdV equations with parallelization
 
 ## Instructions
 
-Open MATLAB and run the `kdv.m` script while working on this directory.
-The `parallel` branch uses the `spmd` function to make the most demanding code fragments run in parallel.
+Open MATLAB and run the `kdv_sequential.m` script while working on this directory, or the `kdv_parallel.m` script if you wish to use `spmd`.

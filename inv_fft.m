@@ -1,4 +1,6 @@
-function y = inv_fft(x,N)
+function y = inv_fft(x)
+  size_x = size(x);
+  N = size_x(2);
   L=length(x);
   y=[ ]; % matriz vacia
   k=0:L -1;
@@ -6,5 +8,5 @@ function y = inv_fft(x,N)
     b=exp((1i*2*k*m*pi)/N);
     s=sum(x.*b)./N;
     y=[y s];
-  endfor
-endfunction
+  end
+end
